@@ -1,130 +1,193 @@
 # URL Shortener
 
-URL Shortener is a web application that allows you to shorten long URLs into short URLs, easy to share.
+URL Shortener is a web application that allows you to shorten long URLs into short, shareable links. The project consists of a backend developed in Go and a frontend using SvelteKit with Vite and Tailwind CSS.
 
 ## Features
 
-- URL shortening
-- Redirection to the long URL from the short URL
-- Storage of URL mappings in a SQLite database
+- **URL Shortening**: Convert a long URL into a short URL.
+- **Redirection**: Access the long URL using the short URL.
+- **User Interface**: A simple and efficient interface to interact with the application.
+- **URL Storage**: Uses a SQLite database to store URL mappings.
 
 ## Prerequisites
 
-- Go 1.23 or higher
-- SQLite
+- Go 1.23 or later
+- Node.js and npm (for the frontend)
+- Docker and Docker Compose (for deployment)
 
 ## Installation
 
-1. Clone the repository:
+### Backend
+
+1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/gkehren/url_shortener.git
-   cd url-shortener
+   git clone https://github.com/gkehren/url-shortener.git
+   cd url-shortener/backend
    ```
 
-2. Install dependencies:
+2. **Install dependencies**:
 
    ```bash
    go mod tidy
    ```
 
-3. Configure the database:
+3. **Set up the database**:
 
-   - The project uses SQLite for URL storage. A `urls.db` file will be created in the project's root directory.
+   - The project uses SQLite for URL storage. Ensure the `urls.db` file is accessible.
+
+### Frontend
+
+1. **Navigate to the frontend directory**:
+
+   ```bash
+   cd ../frontend
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**:
+
+   ```bash
+   npm run dev
+   ```
 
 ## Usage
 
-1. Start the application:
+1. **Start the backend**:
 
    ```bash
-   go run cmd/url_shortener/main.go
+   go run cmd/url-shortener/main.go
    ```
 
-2. Access the application via `http://localhost:8080`.
+2. **Access the application**:
 
-## URL Shortener API Documentation
+   - Backend: `http://localhost:8080`
+   - Frontend: `http://localhost:3000`
 
-# URL Shortener API Documentation
+## Docker
 
-This documentation provides details on how to interact with the URL Shortener API. The API allows users to shorten long URLs and resolve short URLs to their original long URLs.
+To simplify deployment, use Docker Compose:
 
-## Base URL
+1. **Build and start containers**:
 
-The base URL for all API endpoints is:
+   ```bash
+   docker-compose up --build
+   ```
 
-```
-http://localhost:8080
-```
+## API
 
-## Endpoints
+### Endpoints
 
-### 1. Shorten URL
+- **Shorten URL**: `POST /shorten`
+  - Request: `{"long_url": "http://example.com"}`
+  - Response: `{"short_url": "abC123"}`
 
-- **URL**: `/shorten`
-- **Method**: `POST`
-- **Description**: Shortens a long URL and returns a short URL.
-- **Request Body**:
-  ```json
-  {
-    "long_url": "string"
-  }
-  ```
-  - **long_url** (string, required): The long URL to be shortened.
-- **Response**:
-  - **Success**: `(Status: 200 OK)`
-    ```json
-    {
-        "short_url": "string"
-    }
-    ```
-    - **short_url** (string): The generated short URL.
-  - **Error**: `(Status: 500 Internal Server Error)`
-      ```json
-      {
-        "error": "string"
-      }
-      ```
-      - **error** (string): A message describing the error.
+- **Resolve URL**: `GET /:shortURL`
+  - Redirects to the associated long URL.
 
-### 2. Resolve URL
+## Contribution
 
-- **URL**: `/:short_url`
-- **Method**: `GET`
-- **Description**: Resolves a short URL to its corresponing long URL.
-- **Path Parameter**:
-  - **short_url** (string, required): The short URL to be resolved.
-- **Response**:
-  - **Success**: `(Status: 302 Found)`
-    - Redirects to the original long URL.
-  - **Error**: `(Status: 404 Not Found)`
-      `URL not found`
+Contributions are welcome! Please open an issue or submit a pull request.
 
-## Examples
+## License
 
-### Shorten URL
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.# URL Shortener
 
-**Request**:
+URL Shortener is a web application that allows you to shorten long URLs into short, shareable links. The project consists of a backend developed in Go and a frontend using SvelteKit with Vite and Tailwind CSS.
 
-```curl -X POST http://localhost:8080/shorten -H "Content-Type: application/json" -d '{"long_url": "https://www.google.com"}'```
+## Features
 
-**Response**:
+- **URL Shortening**: Convert a long URL into a short URL.
+- **Redirection**: Access the long URL using the short URL.
+- **User Interface**: A simple and efficient interface to interact with the application.
+- **URL Storage**: Uses a SQLite database to store URL mappings.
 
-```json
-{
-    "short_url": "gBti0D"
-}
-```
+## Prerequisites
 
-### Resolve URL
+- Go 1.23 or later
+- Node.js and npm (for the frontend)
+- Docker and Docker Compose (for deployment)
 
-**Request**:
+## Installation
 
-```curl -X GET http://localhost:8080/gBti0D```
+### Backend
 
-**Response**:
-- Redirects to `https://www.google.com`.
+1. **Clone the repository**:
 
-## Error Handling
+   ```bash
+   git clone https://github.com/your-username/url-shortener.git
+   cd url-shortener/backend
+   ```
 
-- **404 Not Found**: The requested ressource could not be found.
-- **500 Internal Server Error**: An error occurred on the server.
+2. **Install dependencies**:
+
+   ```bash
+   go mod tidy
+   ```
+
+3. **Set up the database**:
+
+   - The project uses SQLite for URL storage. Ensure the `urls.db` file is accessible.
+
+### Frontend
+
+1. **Navigate to the frontend directory**:
+
+   ```bash
+   cd ../frontend
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**:
+
+   ```bash
+   npm run dev
+   ```
+
+## Usage
+
+1. **Start the backend**:
+
+   ```bash
+   go run cmd/url-shortener/main.go
+   ```
+
+2. **Access the application**:
+
+   - Backend: `http://localhost:8080`
+   - Frontend: `http://localhost:3000`
+
+## Docker
+
+To simplify deployment, use Docker Compose:
+
+1. **Build and start containers**:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+## API
+
+### Endpoints
+
+- **Shorten URL**: `POST /shorten`
+  - Request: `{"long_url": "http://example.com"}`
+  - Response: `{"short_url": "abC123"}`
+
+- **Resolve URL**: `GET /:shortURL`
+  - Redirects to the associated long URL.
+
+## Contribution
+
+Contributions are welcome! Please open an issue or submit a pull request.
