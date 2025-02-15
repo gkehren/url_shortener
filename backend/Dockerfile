@@ -18,6 +18,8 @@ RUN go build -o main ./cmd/url_shortener
 
 FROM alpine:3.21.2
 
+RUN mkdir -p /data
+
 COPY --from=builder /app/main .
 
 EXPOSE 8080

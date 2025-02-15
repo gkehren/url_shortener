@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"url_shortener/internal/config"
 	"url_shortener/pkg/handlers"
 	repository "url_shortener/pkg/models"
@@ -15,7 +16,11 @@ var db *gorm.DB
 
 func initDB() {
 	var err error
-	db, err = gorm.Open(sqlite.Open("urls.db"), &gorm.Config{})
+	dbPath := "/data/urls.db"
+	if envPath := os.Getenv("DB_PATH"); envPath != "" {
+		dbPath = envPath
+	}
+	db, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	if err != nil {
 		panic("faile to connect database")
 	}

@@ -4,9 +4,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DB_PATH=./urls.db
+      - DB_PATH=/data/urls.db
     volumes:
       - ./backend:/app
+      - sqlite-data:/data
     depends_on:
       - db
     networks:
@@ -24,9 +25,12 @@ services:
   db:
     image: keinos/sqlite3:3.49.0
     volumes:
-      - ./backend/urls.db:/data/urls.db
+      - sqlite-data:/data
     networks:
       - url-shortener
+
+volumes:
+  sqlite-data:
 
 networks:
   url-shortener:
